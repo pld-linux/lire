@@ -83,16 +83,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %pre
 if [ "x`getgid lire`" == "x" ]; then
-    /usr/sbin/groupadd lire
-    if [ "x`id -u lire`" == "x" ]; then
-       /usr/sbin/useradd -r -c "Lire User" -d %{_localstatedir}/spool/%{name} lire -g lire
-    fi
+	/usr/sbin/groupadd lire
+	if [ "x`id -u lire`" == "x" ]; then
+		/usr/sbin/useradd -r -c "Lire User" -d %{_localstatedir}/spool/%{name} lire -g lire
+	fi
 fi
 
 %postun
 if [ "$1" = "0" ]; then
-       /usr/sbin/groupdel lire
-       /usr/sbin/userdel lire
+	/usr/sbin/groupdel lire
+	/usr/sbin/userdel lire
 fi
 
 %files

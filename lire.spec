@@ -59,9 +59,6 @@ install -d $RPM_BUILD_ROOT{%{_localstatedir}/spool/%{name},%{_localstatedir}/lib
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/cron.d/lire
 
-gzip -9fn doc/*.txt README* NEWS THANKS AUTHORS \
-	doc/TODO doc/BUGS
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -81,7 +78,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz doc/*gz doc/*.html
+%doc doc/*.txt README* NEWS THANKS AUTHORS doc/TODO doc/BUGS
 
 %attr(640,root,root) %config /etc/cron.d/lire
 

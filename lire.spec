@@ -1,4 +1,5 @@
 Summary:	Generate reports from various logfiles
+Summary(pl):	Generator raportów z ró¿nych logów
 Name:		lire
 Version:	20010626
 Release:	3
@@ -11,11 +12,12 @@ Source0:	http://logreport.org/pub/%{name}-%{version}.tar.gz
 Source1:	%{name}.cron
 Patch0:		%{name}-nopdftexdoc.patch
 URL:		http://www.logreport.org/
-PreReq:		sh-utils, shadow-utils
-Requires:	crondaemon
 BuildRequires:	openjade, opensp, sgml-common, lynx, perl, perl-modules
-BuildArch:	noarch
+BuildRequires:	autoconf
+Prereq:		sh-utils, shadow-utils
+Requires:	crondaemon
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildArch:	noarch
 
 %include	/usr/lib/rpm/macros.perl
 
@@ -30,16 +32,24 @@ local system in a cronjob, or can be received via email.
 If you're not running any of the supported services, this package
 won't be very useful for you.
 
+%description -l pl
+Lire automatycznie generuje u¿yteczne raporty z surowych plików logów
+ró¿nych serwisów. Aktualnie obs³ugiwane s± logi: exima, sendmaila,
+qmaila, postfiksa, binda, boa, apache.
+
+Raporty mog± byæ w formacie ASCII, PDF lub HTML. Logi mog± byæ czytane
+z lokalnego systemu z crona lub dostarczane e-mailem.
+
 %prep
 %setup -q
 %patch0 -p1
 
 %build
-HASXALAN=no \
-LR_PERL5LIBDIR=%perl_sitearch \
-LR_SPOOLDIR=%{_localstatedir}/spool/%{name} \
-LR_ARCHIVEDIR=%{_localstatedir}/lib/%{name}
 autoconf
+HASXALAN=no \
+LR_PERL5LIBDIR=%{perl_sitearch} \
+LR_SPOOLDIR=%{_localstatedir}/spool/%{name} \
+LR_ARCHIVEDIR=%{_localstatedir}/lib/%{name} \
 %configure
 %{__make}
 
@@ -65,6 +75,12 @@ if [ "x`getgid lire`" == "x" ]; then
     if [ "x`id -u lire`" == "x" ]; then
 	/usr/sbin/useradd -r -c "Lire User" -d %{_localstatedir}/spool/%{name} lire -g lire
     fi
+fi
+
+%postun
+if [ "$1" = "0" ]; then
+	/usr/sbin/groupdel lire
+	/usr/sbin/userdel lire
 fi
 
 %files

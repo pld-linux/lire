@@ -3,14 +3,13 @@ Summary:	Generate reports from various logfiles
 Summary(pl):	Generator raportów z ró¿nych logów
 Name:		lire
 Version:	1.3
-%define	_beta	beta2
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL
 Vendor:		LogReport Foundation (http://www.logreport.org)
 Group:		Applications/System
-Source0:	http://logreport.org/pub/archive/lire-%{version}%{_beta}.tar.gz
-# Source0-md5:	04e1ccd3397d071aedccaf7bbf49c0bd
+Source0:	http://logreport.org/pub/lire-%{version}.tar.gz
+# Source0-md5:	62f16cfd1554fc3485d0e88f0c37b8b4
 Source1:	%{name}.cron
 Patch0:		%{name}-nopdftexdoc.patch
 Patch1:		%{name}-am.patch
@@ -50,7 +49,7 @@ Raporty mog± byæ w formacie ASCII, PDF lub HTML. Logi mog± byæ czytane
 z lokalnego systemu z crona lub dostarczane e-mailem.
 
 %prep
-%setup -q -n %{name}-%{version}%{_beta}
+%setup -q -n %{name}-%{version}
 #%patch0 -p1
 %patch1 -p0
 

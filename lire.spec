@@ -18,7 +18,6 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildArchitectures:	noarch
 
 %include	/usr/lib/rpm/macros.perl
-%define		_sysconfdir		/etc/%{name}
 
 %description
 Lire automatically generates useful reports from raw logfiles from
@@ -51,7 +50,6 @@ LR_ARCHIVEDIR=%{_localstatedir}/lib/%{name}
 %{__install} -d $RPM_BUILD_ROOT{%{_localstatedir}/spool/%{name},%{_localstatedir}/lib/%{name},/etc/cron.d}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	sysconfdir=/etc \
 	LR_PERL5LIBDIR=%perl_sitearch
 
 %{__install} %{SOURCE1} $RPM_BUILD_ROOT/etc/cron.d/lire
@@ -60,10 +58,10 @@ LR_ARCHIVEDIR=%{_localstatedir}/lib/%{name}
 %__rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`getgid lire`" ]; then
-    /usr/sbin/groupadd -r -f lire
-    if [ -n "`id -u lire 2>/dev/null`" ]; then
-	/usr/sbin/useradd -r -c "Lire User" -d %{_localstatedir}/spool/%{name} lire
+if [ "x`getgid lire`" == "x" ]; then
+    /usr/sbin/groupadd lire
+    if [ "x`id -u lire`" == "x" ]; then
+	/usr/sbin/useradd -r -c "Lire User" -d %{_localstatedir}/spool/%{name} lire -g lire
     fi
 fi
 
@@ -74,20 +72,20 @@ fi
 
 %attr(640,root,root) %config /etc/cron.d/lire
 
-%attr(775,root,lire) %dir %{_sysconfdir}
-%attr(775,root,lire) %dir %{_sysconfdir}/apachemodgzip
-%attr(775,root,lire) %dir %{_sysconfdir}/dns
-%attr(775,root,lire) %dir %{_sysconfdir}/email
-%attr(775,root,lire) %dir %{_sysconfdir}/www
+%attr(775,root,lire) %dir %{_sysconfdir}/%{name}
+%attr(775,root,lire) %dir %{_sysconfdir}/%{name}/apachemodgzip
+%attr(775,root,lire) %dir %{_sysconfdir}/%{name}/dns
+%attr(775,root,lire) %dir %{_sysconfdir}/%{name}/email
+%attr(775,root,lire) %dir %{_sysconfdir}/%{name}/www
 
-%attr(664,root,lire) %config %{_sysconfdir}/address.cf
-%attr(664,root,lire) %config %{_sysconfdir}/defaults
-%attr(664,root,lire) %config %{_sysconfdir}/disclaimer
-%attr(664,root,lire) %config %{_sysconfdir}/explanation
-%attr(664,root,lire) %config %{_sysconfdir}/profile_lean
-%attr(664,root,lire) %config %{_sysconfdir}/signature
+%attr(664,root,lire) %config %{_sysconfdir}/%{name}/address.cf
+%attr(664,root,lire) %config %{_sysconfdir}/%{name}/defaults
+%attr(664,root,lire) %config %{_sysconfdir}/%{name}/disclaimer
+%attr(664,root,lire) %config %{_sysconfdir}/%{name}/explanation
+%attr(664,root,lire) %config %{_sysconfdir}/%{name}/profile_lean
+%attr(664,root,lire) %config %{_sysconfdir}/%{name}/signature
 
-%attr(664,root,lire) %config %{_sysconfdir}/*/*
+%attr(664,root,lire) %config %{_sysconfdir}/%{name}/*/*
 
 %attr(755,root,root) %{_bindir}/*
 %{_libexecdir}/%{name}

@@ -39,24 +39,25 @@ HASXALAN=no \
 LR_PERL5LIBDIR=%perl_sitearch \
 LR_SPOOLDIR=%{_localstatedir}/spool/%{name} \
 LR_ARCHIVEDIR=%{_localstatedir}/lib/%{name}
-%{__autoconf}
+autoconf
 %configure
 %{__make}
 
 %install
-%{__rm} -rf $RPM_BUILD_ROOT
-%{__install} -d $RPM_BUILD_ROOT{%{_localstatedir}/spool/%{name},%{_localstatedir}/lib/%{name},/etc/cron.d}
+rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{%{_localstatedir}/spool/%{name},%{_localstatedir}/lib/%{name},/etc/cron.d}
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	LR_PERL5LIBDIR=%perl_sitearch
 
-%{__install} %{SOURCE1} $RPM_BUILD_ROOT/etc/cron.d/lire
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/cron.d/lire
+
+gzip -9fn doc/*.txt README* NEWS THANKS AUTHORS \
+	doc/TODO doc/BUGS
 
 %clean
-%__rm -rf $RPM_BUILD_ROOT
-
-%__gzip -9fn doc/*.txt README* NEWS THANKS AUTHORS \
-	doc/TODO doc/BUGS
+rm -rf $RPM_BUILD_ROOT
 
 %pre
 if [ "x`getgid lire`" == "x" ]; then

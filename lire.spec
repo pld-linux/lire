@@ -1,24 +1,34 @@
+%include	/usr/lib/rpm/macros.perl
 Summary:	Generate reports from various logfiles
 Summary(pl):	Generator raportów z ró¿nych logów
 Name:		lire
-Version:	20020214
+Version:	1.3
+%define	_beta	beta2
 Release:	1
+Epoch:		1
 License:	GPL
 Vendor:		LogReport Foundation (http://www.logreport.org)
 Group:		Applications/System
-Source0:	http://logreport.org/pub/lire-full-%{version}.tar.gz
+Source0:	http://logreport.org/pub/lire-%{version}%{_beta}.tar.gz
 Source1:	%{name}.cron
 Patch0:		%{name}-nopdftexdoc.patch
+Patch1:		%{name}-am.patch
 URL:		http://www.logreport.org/
-BuildRequires:	openjade, opensp, sgml-common, lynx, perl, perl-modules
+BuildConflicts:	openjade, libxslt-progs
 BuildRequires:	autoconf
-Prereq:		sh-utils, shadow-utils
+BuildRequires:	automake
+BuildRequires:	lynx
+BuildRequires:	opensp
+BuildRequires:	perl-devel
+BuildRequires:	rpm-perlprov
+BuildRequires:	sgml-common
+BuildRequires:	smtpdaemon
+Prereq:		coreutils
+Prereq:		shadow-utils
 Requires(pre):	user-lire
 Requires:	crondaemon
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildArch:	noarch
-
-%include	/usr/lib/rpm/macros.perl
 
 %description
 Lire automatically generates useful reports from raw logfiles from
@@ -40,14 +50,23 @@ Raporty mog± byæ w formacie ASCII, PDF lub HTML. Logi mog± byæ czytane
 z lokalnego systemu z crona lub dostarczane e-mailem.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q -n %{name}-%{version}%{_beta}
+#%patch0 -p1
+%patch1 -p0
+
+# ugly kludge, but I don't know the proper way
+find -type f | xargs %{__perl} -pi -e 's/^all: all-redirect/all: /'
 
 %build
-automake
-./configure       --with-spooldir=%{_localstatedir}/spool/%{name} \
-		 --with-perl5archlibdir=%{perl_sitearch} \
-	 	 --with-archivedir==%{_localstatedir}/lib/%{name}
+%{__aclocal}
+%{__autoconf}
+#%{__autoheader}
+%{__automake}
+%configure \
+	--with-spooldir=%{_localstatedir}/spool/%{name} \
+	--with-perl5libdir=%{perl_vendorlib} \
+	--with-perl5archlibdir=%{perl_vendorarch} \
+	--with-archivedir=%{_localstatedir}/lib/%{name}
 %{__make}
 
 %install
@@ -56,7 +75,7 @@ install -d $RPM_BUILD_ROOT{%{_localstatedir}/spool/%{name},%{_localstatedir}/lib
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	LR_PERL5LIBDIR=%perl_sitearch
+	LR_PERL5LIBDIR=%{perl_vendorlib}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/cron.d/lire
 
@@ -86,7 +105,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_bindir}/*
 %{_libexecdir}/%{name}
-%{perl_sitearch}/Lire
+%{perl_vendorlib}/Lire
 %{_datadir}/%{name}
 
 %attr(770,root,lire) %dir %{_localstatedir}/spool/%{name}

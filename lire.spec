@@ -25,7 +25,6 @@ BuildRequires:	sgml-common
 BuildRequires:	smtpdaemon
 Prereq:		coreutils
 Prereq:		shadow-utils
-Requires(pre):	user-lire
 Requires:	crondaemon
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildArch:	noarch
@@ -81,6 +80,20 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/cron.d/lire
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%pre
+if [ "x`getgid lire`" == "x" ]; then
+    /usr/sbin/groupadd lire
+    if [ "x`id -u lire`" == "x" ]; then
+       /usr/sbin/useradd -r -c "Lire User" -d %{_localstatedir}/spool/%{name} lire -g lire
+    fi
+fi
+
+%postun
+if [ "$1" = "0" ]; then
+       /usr/sbin/groupdel lire
+       /usr/sbin/userdel lire
+fi
 
 %files
 %defattr(644,root,root,755)

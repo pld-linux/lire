@@ -2,20 +2,20 @@ Summary:	Generate reports from various logfiles
 Name:		lire
 Version:	20010626
 Release:	3
+License:	GPL
+Vendor:		LogReport Foundation (http://www.logreport.org)
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 Source0:	http://logreport.org/pub/%{name}-%{version}.tar.gz
 Source1:	%{name}.cron
 Patch0:		%{name}-nopdftexdoc.patch
 URL:		http://www.logreport.org/
-License:	GPL
-Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
-Vendor:		LogReport Foundation (http://www.logreport.org)
 PreReq:		sh-utils, shadow-utils
 Requires:	crondaemon
 BuildRequires:	openjade, opensp, sgml-common, lynx, perl, perl-modules
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-BuildArchitectures:	noarch
 
 %include	/usr/lib/rpm/macros.perl
 
@@ -43,10 +43,8 @@ LR_ARCHIVEDIR=%{_localstatedir}/lib/%{name}
 %configure
 %{__make}
 
-%__gzip -9fn doc/*.txt
-
 %install
-%__rm -rf $RPM_BUILD_ROOT
+%{__rm} -rf $RPM_BUILD_ROOT
 %{__install} -d $RPM_BUILD_ROOT{%{_localstatedir}/spool/%{name},%{_localstatedir}/lib/%{name},/etc/cron.d}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -56,6 +54,9 @@ LR_ARCHIVEDIR=%{_localstatedir}/lib/%{name}
 
 %clean
 %__rm -rf $RPM_BUILD_ROOT
+
+%__gzip -9fn doc/*.txt README* NEWS THANKS AUTHORS \
+	doc/TODO doc/BUGS
 
 %pre
 if [ "x`getgid lire`" == "x" ]; then
@@ -67,8 +68,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc README* INSTALL NEWS THANKS COPYING AUTHORS
-%doc doc/*.txt.* doc/*.html doc/TODO doc/BUGS
+%doc *.gz doc/*gz doc/*.html
 
 %attr(640,root,root) %config /etc/cron.d/lire
 
@@ -95,5 +95,5 @@ fi
 %attr(770,root,lire) %dir %{_localstatedir}/spool/%{name}
 %attr(770,root,lire) %dir %{_localstatedir}/lib/%{name}
 
-%doc %{_mandir}/man1/*.1*
-%doc %{_mandir}/man3/*.3pm*
+%{_mandir}/man1/*.1*
+%{_mandir}/man3/*.3pm*

@@ -59,12 +59,12 @@ LR_ARCHIVEDIR=%{_localstatedir}/lib/%{name}
 	doc/TODO doc/BUGS
 
 %pre
-if [ "x`getgid lire`" == "x" ]; then
-    /usr/sbin/groupadd lire
-    if [ "x`id -u lire`" == "x" ]; then
-	/usr/sbin/useradd -r -c "Lire User" -d %{_localstatedir}/spool/%{name} lire -g lire
-    fi
-fi
+%groupadd
+COMMENT="Lire User"; HOMEDIR="%{_localstatedir}/spool/%{name}"; %useradd
+
+%postun
+%userdel
+%groupdel
 
 %files
 %defattr(644,root,root,755)

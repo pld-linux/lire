@@ -1,12 +1,12 @@
 Summary:	Generate reports from various logfiles
 Summary(pl):	Generator raportów z ró¿nych logów
 Name:		lire
-Version:	20010626
-Release:	3
+Version:	20020214
+Release:	1
 License:	GPL
 Vendor:		LogReport Foundation (http://www.logreport.org)
 Group:		Applications/System
-Source0:	http://logreport.org/pub/%{name}-%{version}.tar.gz
+Source0:	http://logreport.org/pub/lire-full-%{version}.tar.gz
 Source1:	%{name}.cron
 Patch0:		%{name}-nopdftexdoc.patch
 URL:		http://www.logreport.org/
@@ -43,12 +43,9 @@ z lokalnego systemu z crona lub dostarczane e-mailem.
 %patch0 -p1
 
 %build
-autoconf
-HASXALAN=no \
-LR_PERL5LIBDIR=%{perl_sitearch} \
-LR_SPOOLDIR=%{_localstatedir}/spool/%{name} \
-LR_ARCHIVEDIR=%{_localstatedir}/lib/%{name} \
-%configure
+%configure       --with-spooldir=%{_localstatedir}/spool/%{name} \
+		 --with-perl5archlibdir=%{perl_sitearch} \
+	 	 --with-archivedir==%{_localstatedir}/lib/%{name}
 %{__make}
 
 %install

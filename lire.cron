@@ -1,0 +1,7 @@
+# Generates daily reports
+# Run about 30 minutes after logrotate
+0 5 * * * lire lr_cron daily
+
+# Generates weekly reports
+# Run about 30 minutes after logrotate
+5 5 * * 0 lire lr_cron weekly

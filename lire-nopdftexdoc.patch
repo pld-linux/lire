@@ -1,0 +1,12 @@
+diff -urN lire-20010626.orig/doc/Makefile.in lire-20010626/doc/Makefile.in
+--- lire-20010626.orig/doc/Makefile.in	Tue Jun 26 16:42:48 2001
++++ lire-20010626/doc/Makefile.in	Tue Jul 10 13:37:23 2001
+@@ -122,7 +122,7 @@
+ TEX2PDFRULE = $(PATHTOPDFJADETEX) $< >/dev/null; $(PATHTOPDFJADETEX) $< >/dev/null; $(PATHTOPDFJADETEX) $< >/dev/null
+ 
+ docdir = $(datadir)/doc/$(PACKAGE)
+-doc_DATA = developer.html developer.pdf developer.tex developer.txt   manual.html manual.pdf manual.tex manual.txt roadmap.html roadmap.txt
++doc_DATA = developer.html developer.txt   manual.html manual.txt roadmap.html roadmap.txt
+ 
+ 
+ CLEANFILES = developer.aux developer.log developer.out   manual.aux manual.log manual.out roadmap.aux roadmap.log   roadmap.out

@@ -6,8 +6,6 @@ Release:	3
 License:	GPL
 Vendor:		LogReport Foundation (http://www.logreport.org)
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 Source0:	http://logreport.org/pub/%{name}-%{version}.tar.gz
 Source1:	%{name}.cron
 Patch0:		%{name}-nopdftexdoc.patch

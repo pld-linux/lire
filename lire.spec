@@ -43,6 +43,7 @@ z lokalnego systemu z crona lub dostarczane e-mailem.
 %patch0 -p1
 
 %build
+automake
 ./configure       --with-spooldir=%{_localstatedir}/spool/%{name} \
 		 --with-perl5archlibdir=%{perl_sitearch} \
 	 	 --with-archivedir==%{_localstatedir}/lib/%{name}

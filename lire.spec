@@ -9,8 +9,8 @@ Epoch:		1
 License:	GPL
 Vendor:		LogReport Foundation (http://www.logreport.org)
 Group:		Applications/System
-Source0:	http://logreport.org/pub/lire-%{version}%{_beta}.tar.gz
-# Source0-md5:	d3e4e87987e90d97441a79be36e1abb9
+Source0:	http://logreport.org/pub/archive/lire-%{version}%{_beta}.tar.gz
+# Source0-md5:	04e1ccd3397d071aedccaf7bbf49c0bd
 Source1:	%{name}.cron
 Patch0:		%{name}-nopdftexdoc.patch
 Patch1:		%{name}-am.patch

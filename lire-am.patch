@@ -1,0 +1,10 @@
+--- www/Makefile.am~	Tue Jul 16 21:19:21 2002
++++ www/Makefile.am	Sun May 11 12:54:29 2003
+@@ -41,6 +41,7 @@
+ 
+ # Conflict with www-user_session.xml
+ #	www-session_id.xml \
++#
+ 
+ etcdir = $(sysconfdir)/$(PACKAGE)
+ etc_DATA = www.cfg

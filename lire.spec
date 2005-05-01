@@ -21,7 +21,7 @@ BuildRequires:	lynx
 BuildRequires:	opensp
 BuildRequires:	perl-devel
 BuildRequires:	rpm-perlprov
-BuildRequires:	rpmbuild(macros) >= 1.159
+BuildRequires:	rpmbuild(macros) >= 1.202
 BuildRequires:	sgml-common
 BuildRequires:	smtpdaemon
 Prereq:		coreutils
@@ -91,22 +91,8 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/cron.d/lire
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`/usr/bin/getgid lire`" ]; then
-	if [ "`/usr/bin/getgid lire`" != "106" ]; then
-		echo "Error: group lire doesn't have gid=106. Correct this before installing lire." 1>&2
-		exit 1
-	fi
-else
-	/usr/sbin/groupadd -g 106 lire
-fi
-if [ -n "`/bin/id -u lire 2>/dev/null`" ]; then
-	if [ "`/bin/id -u lire`" != "106" ]; then
-		echo "Error: user lire doesn't have uid=106. Correct this before installing lire." 1>&2
-		exit 1
-	fi
-else
-	/usr/sbin/useradd -u 106 -c "Lire User" -d %{_localstatedir}/spool/%{name} -g lire lire
-fi
+%groupadd -g 106 lire
+%useradd -u 106 -c "Lire User" -d %{_localstatedir}/spool/%{name} -g lire lire
 
 %postun
 if [ "$1" = "0" ]; then

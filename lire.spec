@@ -58,7 +58,7 @@ Raporty mog± byæ w formacie ASCII, PDF lub HTML. Logi mog± byæ czytane
 z lokalnego systemu z crona lub dostarczane e-mailem.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 #%patch0 -p1
 %patch1 -p0
 
@@ -103,31 +103,24 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc doc/*.txt README* NEWS THANKS AUTHORS doc/TODO doc/BUGS
-
 %attr(640,root,root) %config /etc/cron.d/lire
-
 %attr(775,root,lire) %dir %{_sysconfdir}/%{name}
 %attr(775,root,lire) %dir %{_sysconfdir}/%{name}/apachemodgzip
 %attr(775,root,lire) %dir %{_sysconfdir}/%{name}/dns
 %attr(775,root,lire) %dir %{_sysconfdir}/%{name}/email
 %attr(775,root,lire) %dir %{_sysconfdir}/%{name}/www
-
 %attr(664,root,lire) %config %{_sysconfdir}/%{name}/address.cf
 %attr(664,root,lire) %config %{_sysconfdir}/%{name}/defaults
 %attr(664,root,lire) %config %{_sysconfdir}/%{name}/disclaimer
 %attr(664,root,lire) %config %{_sysconfdir}/%{name}/explanation
 %attr(664,root,lire) %config %{_sysconfdir}/%{name}/profile_lean
 %attr(664,root,lire) %config %{_sysconfdir}/%{name}/signature
-
 %attr(664,root,lire) %config %{_sysconfdir}/%{name}/*/*
-
 %attr(755,root,root) %{_bindir}/*
 %{_libexecdir}/%{name}
 %{perl_vendorlib}/Lire
 %{_datadir}/%{name}
-
 %attr(770,root,lire) %dir %{_localstatedir}/spool/%{name}
 %attr(770,root,lire) %dir %{_localstatedir}/lib/%{name}
-
 %{_mandir}/man1/*.1*
 %{_mandir}/man3/*.3pm*

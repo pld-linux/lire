@@ -1,6 +1,6 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	Generate reports from various logfiles
-Summary(pl):	Generator raportów z ró¿nych logów
+Summary(pl.UTF-8):   Generator raportÃ³w z rÃ³Å¼nych logÃ³w
 Name:		lire
 Version:	1.3
 Release:	2
@@ -49,12 +49,12 @@ local system in a cronjob, or can be received via email.
 If you're not running any of the supported services, this package
 won't be very useful for you.
 
-%description -l pl
-Lire automatycznie generuje u¿yteczne raporty z surowych plików logów
-ró¿nych serwisów. Aktualnie obs³ugiwane s± logi: exima, sendmaila,
+%description -l pl.UTF-8
+Lire automatycznie generuje uÅ¼yteczne raporty z surowych plikÃ³w logÃ³w
+rÃ³Å¼nych serwisÃ³w. Aktualnie obsÅ‚ugiwane sÄ… logi: exima, sendmaila,
 qmaila, postfiksa, binda, boa, apache.
 
-Raporty mog± byæ w formacie ASCII, PDF lub HTML. Logi mog± byæ czytane
+Raporty mogÄ… byÄ‡ w formacie ASCII, PDF lub HTML. Logi mogÄ… byÄ‡ czytane
 z lokalnego systemu z crona lub dostarczane e-mailem.
 
 %prep

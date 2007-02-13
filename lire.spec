@@ -1,6 +1,6 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	Generate reports from various logfiles
-Summary(pl.UTF-8):   Generator raportów z różnych logów
+Summary(pl.UTF-8):	Generator raportów z różnych logów
 Name:		lire
 Version:	1.3
 Release:	2

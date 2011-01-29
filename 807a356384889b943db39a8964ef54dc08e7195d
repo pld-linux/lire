@@ -1,0 +1,5 @@
+- adaptarized to PLD
+- BuildRequires (check it, i'm not sure)
+- Patch0 (no pdf and tex doc's)
+- Source1: lire.cron
+- more %__ macros

@@ -59,7 +59,7 @@ z lokalnego systemu z crona lub dostarczane e-mailem.
 %prep
 %setup -q
 #%patch0 -p1
-%patch1 -p0
+%patch -P1 -p0
 
 # ugly kludge, but I don't know the proper way
 find -type f | xargs %{__perl} -pi -e 's/^all: all-redirect/all: /'

@@ -58,7 +58,7 @@ z lokalnego systemu z crona lub dostarczane e-mailem.
 
 %prep
 %setup -q
-#%patch0 -p1
+#%%patch0 -p1
 %patch -P1 -p0
 
 # ugly kludge, but I don't know the proper way
